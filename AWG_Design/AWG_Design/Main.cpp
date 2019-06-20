@@ -4,7 +4,7 @@
 
 int main() 
 {
-
+	testing::compute_AWG_Params(); 
 
 	std::cout << "Press enter to close\n"; 
 	std::cin.get(); 

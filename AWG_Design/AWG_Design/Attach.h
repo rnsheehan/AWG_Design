@@ -44,5 +44,6 @@ static const std::string empty_string = "";
 #include "Templates.h"
 #include "Useful.h"
 #include "AWG.h"
+#include "Testing.h"
 
 #endif

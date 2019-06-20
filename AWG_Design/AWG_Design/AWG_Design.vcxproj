@@ -118,11 +118,13 @@
     <ClInclude Include="Attach.h" />
     <ClInclude Include="AWG.h" />
     <ClInclude Include="Templates.h" />
+    <ClInclude Include="Testing.h" />
     <ClInclude Include="Useful.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AWG.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Testing.cpp" />
     <ClCompile Include="Useful.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
