@@ -35,14 +35,14 @@ static const double PI_6 = ((2.0 / 3.0)*p); // pi / 6
 static const double RAD_TO_DEG = (180.0/PI); // factor for converting radian to degrees
 static const double DEG_TO_RAD = (PI / 180.0); // factor for converting radian to degrees
 
-static const double SPEED_OF_LIGHT = 300.0; // Speed of light in units of um . THz
-
 static const int MAX_PATH_LENGTH = 250; // max. length for a directory in Windows OS
 
-static const std::string empty_str = "";
-static const std::string dottxt = ".txt";
+static const double minAngle = (29.0 * (PI / 180.0)); // this is the minimum angle of rotation for the slab region of the AWG
+static const double speedLight = 300.0; // speed of light expressed in units of um.THz
+static const std::string empty_string = "";
 
 #include "Templates.h"
 #include "Useful.h"
+#include "AWG.h"
 
 #endif
