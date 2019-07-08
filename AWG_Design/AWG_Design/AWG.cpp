@@ -195,8 +195,9 @@ void AWG_Params::set_slab_sep(double Lstr_min, double Rmin, bool loud)
 
 	try {
 		if (fabs(theta_n) > 0.0 && L_f > 0.0 && Lstr_min >= 0.0 && Rmin > 100) {
-			S_n = Lstr_min;
-			R_min = Rmin; // this value will be updated if it does not satisfy the constraints
+			R_min = Rmin; // this value must be updated if it does not satisfy the constraints
+			S_n = Lstr_min; // choose S_n so that Tan(theta_j) \approx 1 => S_n = R_min - L_f
+			//S_n = R_min - L_f; // this works in but not all cases? Why? 
 			double ll = L_f + S_n;
 			theta_a = atan(R_min / ll) - theta_n;
 			theta_j = theta_a + theta_n;
@@ -208,7 +209,8 @@ void AWG_Params::set_slab_sep(double Lstr_min, double Rmin, bool loud)
 				std::cout << "Initial Layout Report\n";
 				std::cout << "S_n: " << S_n << " um\n";
 				std::cout << "R_n: " << R_min << " um\n";
-				std::cout << "theta_a: " << theta_a << " rad\n";
+				std::cout << "theta_a: " << theta_a << " rad, " << theta_a * (180.0 / PI) << " deg\n";
+				std::cout << "theta_a + theta_n: " << theta_a + theta_n << " rad, " << (theta_a + theta_n) * (180.0 / PI) << " deg\n";
 				std::cout << "L_min: " << L_min << " um\n";
 				std::cout << "L_s: " << slab_sep << " um\n\n";
 			}
