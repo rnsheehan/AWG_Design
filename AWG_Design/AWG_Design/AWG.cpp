@@ -196,8 +196,10 @@ void AWG_Params::set_slab_sep(double Lstr_min, double Rmin, bool loud)
 	try {
 		if (fabs(theta_n) > 0.0 && L_f > 0.0 && Lstr_min >= 0.0 && Rmin > 100) {
 			R_min = Rmin; // this value must be updated if it does not satisfy the constraints
-			S_n = Lstr_min; // choose S_n so that Tan(theta_j) \approx 1 => S_n = R_min - L_f
-			//S_n = R_min - L_f; // this works in but not all cases? Why? 
+			//S_n = Lstr_min; // choose S_n by arbitrary value
+			//S_n = -100+std::floor(R_min - L_f); // choose S_n so that Tan(theta_j) \approx 1 => S_n = R_min - L_f, this does not always ensure that R_min > 0, and can in fact choose R_min to close to zero
+			//S_n = (1/sqrt(3))*R_min - L_f; // choose theta_a + theta_n = \pi / 6
+			S_n = -((tan(theta_n))*R_min + L_f); // choose theta_a = pi / 2 
 			double ll = L_f + S_n;
 			theta_a = atan(R_min / ll) - theta_n;
 			theta_j = theta_a + theta_n;
@@ -244,6 +246,17 @@ void AWG_Params::set_slab_sep(double Lstr_min, double Rmin, bool loud)
 		std::cerr << e.what();
 	}
 }
+
+//void AWG_Params::set_smin_slab_sep()
+//{
+//	// Assign a value to smin = Rmin - Lf, st that \theta_{a}+\theta_{n} ~ \pi / 4
+//	// check that this value satisfies the array arm length constraints
+//	// if constraints are satisfied you are done, if not reduce the value of smin and proceed until you find the correct value
+//
+//	// You might not actually need this. 
+//	// Choose to have the angle theta_a = pi/2 and you should ensure that S_n is correct and R_min > 0
+//	// Remember also tha you don't want R_min close to zero
+//}
 
 double AWG_Params::get_L_j(int j)
 {
@@ -418,11 +431,13 @@ bool AWG_Params::test_constraint_satisfaction()
 		if (params_defined) {
 			int j = 0;
 			bool valid = true;
-			double angle, ss, rr, ll, t1, t2, err;
+			double angle, ss, rr, ll, t1, t2, err, rrmin;
+			rrmin = 1e+5;
 			while (j < N_aw) {
 				angle = get_T_j(j);
 				ss = get_S_j(j);
 				rr = get_R_j(j);
+				if (rr < rrmin) rrmin = rr; // record the value of rmin
 				ll = get_L_j(j);
 				// First Constraint: Cannot have Sj < 0 or Sj > Lj or Rj < 0
 				if (ss < 0.0 || ss > ll || rr < 0.0) {
@@ -455,6 +470,7 @@ bool AWG_Params::test_constraint_satisfaction()
 				}
 				j++;
 			}
+			std::cout << "\nMin Bend Radius: " << rrmin << " um\n\n";
 			return valid;
 		}
 		else {

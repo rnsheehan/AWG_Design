@@ -17,6 +17,7 @@ public:
 	void set_params(double wl_centre, double wl_ch_spac, double wl_fsr, double wg_eff_indx, double wg_grp_indx, double slab_indx, double grating_pitch, double wg_width);
 	void set_params(double wl_centre, double wl_ch_spac, double wl_fsr, double wg_eff_indx, double wg_grp_indx, double slab_indx, double grating_pitch, double output_pitch, double wg_width);
 	void set_slab_sep(double Lstr_min, double R_min, bool loud = false);
+	//void set_smin_slab_sep(); 
 	void estimate_loss_BW(double ncore, double nsub, double X = 1.0, bool loud = false);
 	void set_name(std::string theName);
 	void report();

@@ -46,7 +46,7 @@ void testing::compute_AWG_Params()
 	std::cout << "\nNaw = " << theAWG.get_Naw() << " , Naw / 2 = " << theAWG.get_Naw() / 2 << "\n";
 
 	double ncore = 3.5405, nsub = 1.7176, X = 3.0;
-	theAWG.estimate_loss_BW(ncore, nsub, X, true);
+	//theAWG.estimate_loss_BW(ncore, nsub, X, true);
 }
 
 void testing::REDFINCH_AWG_Params(int set_number)
